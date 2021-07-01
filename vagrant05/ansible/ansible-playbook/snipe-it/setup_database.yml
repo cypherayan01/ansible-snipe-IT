@@ -1,0 +1,21 @@
+---
+
+- name: Create a new database
+  mysql_db:
+    login_user: root
+    login_password: snipeit1
+    name: snipeit
+    state: present
+
+
+- name: Create database user with name  and password  (all database privileges)
+  mysql_user:
+    login_user: root
+    login_password: snipeit1
+    name: snipeituser
+    password: snipeituserpass
+    priv: GRANT ALL PRIVILEGES ON database_name.* TO 'root'@'192.168.33.10';                  #'*.*:ALL'      #"*.*:ALL,GRANT"   #GRANT ALL PRIVILEGES ON *.* TO `snipeituser`@`localhost` IDENTIFIED BY PASSWORD '*96649B091371E2DC1DF8C69C4D0C7CA19ABE18BF'
+
+    state: present
+- name: Flush Privileges
+  shell: sudo systemctl restart mariadb
